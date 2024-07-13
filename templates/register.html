@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register User</title>
+  <style>
+    /* make a great register form style */
+    h1 {
+      text-align: center;
+    }
+    form {
+      width: 300px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    /* make a message div */
+    #message {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* make a red color for error message */
+    #message {
+      color: red;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Register</h1>
+  <form method="POST" action="/act_register">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required><br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required><br>
+    <button type="submit">Register</button>
+  </form>
+    <div id="message">
+        <p>{{ message }}</p>
+    </div>
+
+    <script>
+        // make post request to /act_register
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/act_register', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById('message').innerHTML = data.message;
+            // make message div red if error and greeen if success
+            if (data.success) {
+                document.getElementById('message').style.color = 'green';
+            } else {
+                document.getElementById('message').style.color = 'red';
+            }
+            // and redirect to /login if success in 3 seconds with count down in message div
+            if (data.success) {
+                let count = 3;
+                setInterval(() => {
+                    count--;
+                    document.getElementById('message').innerHTML = `Register success! Redirecting to login in ${count} seconds...`;
+                    if (count === 0) {
+                        window.location.href = '/login';
+                    }
+                }, 1000);
+            }
+            
+        });
+    </script>
+</body>
+</html>
