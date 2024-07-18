@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, render_template_string
 from db_handler import DBHandler
 app = Flask(__name__)
 
@@ -18,6 +18,11 @@ def register():
 @app.route("/login")
 def login():
   return render_template("login.html")
+
+@app.route("/hello", methods=["GET"])
+def hello():
+  name = request.args.get("name")
+  return render_template_string("Hello, {}".format(name))
 
 @app.route("/act_register", methods=["POST"])
 def act_register():
