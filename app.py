@@ -43,7 +43,6 @@ def act_login():
   db.cursor.execute(sql_text)
   print(sql_text)
   datas = db.cursor.fetchall()
-  print(f'datas: {datas}')
   db.close()
   if datas:
     # redirect to welcome page
