@@ -79,13 +79,6 @@ def act_login():
 def welcome():
   return render_template("welcome.html")
 
-# hello name
-@app.route("/hello")
-def hello():
-  name = request.args.get("name")
-  # SSTI vulnerability in name
-  return render_template_string("Hello {}".format(name))
-
 # make route vulnerable to xss attack
 @app.route("/search/<username>")
 def search(username):
