@@ -30,7 +30,7 @@ class DBHandler:
     
     def get_user(self, username):
         self.connect()
-        sql_text = f"SELECT * FROM users WHERE username = '{username}'"
+        sql_text = "SELECT * FROM users WHERE username = '{}'".format(username)
         print(sql_text)
         self.cursor.execute(sql_text)
         datas = self.cursor.fetchall()
