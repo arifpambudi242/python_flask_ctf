@@ -29,9 +29,9 @@ def act_register():
   username = request.form["username"]
   password = request.form["password"]
   if db.get_user(username):
-    return jsonify({"success": False, 'message': f"User {username} already exists"})
+    return jsonify({"success": False, "message": f"User {username} already exists"})
   db.insert_user(username, password)
-  return jsonify({"success": True, 'message': f"User {username} registered successfully"})
+  return jsonify({"success": True, "message": f"User {username} registered successfully"})
 
 @app.route("/act_login", methods=["POST"])
 def act_login():
