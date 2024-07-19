@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, render_template_string
 from db_handler import DBHandler
 app = Flask(__name__)
 
@@ -73,6 +73,18 @@ def act_login():
 @app.route("/welcome")
 def welcome():
   return render_template("welcome.html")
+
+# hello name
+@app.route("/hello")
+def hello():
+  name = request.args.get("name")
+  # SSTI vulnerability in name
+  return render_template_string("Hello {}".format(name))
+
+# make route vulnerable to xss attack
+@app.route("/search/<username>")
+def search(username):
+  return "Search result for {}".format(username)
 
 if __name__ == "__main__":
   app.run(debug=True)
