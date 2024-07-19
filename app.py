@@ -19,6 +19,11 @@ def register():
 def login():
   return render_template("login.html")
 
+@app.route("/hello", methods=["GET"])
+def hello():
+  name = request.args.get("name")
+  return render_template_string("Hello, {}".format(name))
+
 @app.route("/act_register", methods=["POST"])
 def act_register():
   username = request.form["username"]
