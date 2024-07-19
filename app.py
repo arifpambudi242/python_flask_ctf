@@ -29,9 +29,9 @@ def act_register():
   username = request.form["username"]
   password = request.form["password"]
   if db.get_user(username):
-    return jsonify({"success": False, "message": f"User {username} already exists"})
+    return jsonify({"success": False, "message": "User {} already exists".format(username)})
   db.insert_user(username, password)
-  return jsonify({"success": True, "message": f"User {username} registered successfully"})
+  return jsonify({"success": True, "message": "User {} registered successfully".format(username)})
 
 @app.route("/act_login", methods=["POST"])
 def act_login():
@@ -39,7 +39,7 @@ def act_login():
   passwd = request.form["password"]
 #   make it vulnerable to sql injection
   db.connect()
-  sql_text = f"SELECT * FROM users WHERE username = '{username}' AND password = '{passwd}'"
+  sql_text = "SELECT * FROM users WHERE username = '{0}' AND password = '{1}'".format(username, passwd)
   db.cursor.execute(sql_text)
   print(sql_text)
   datas = db.cursor.fetchall()
@@ -71,8 +71,8 @@ def act_login():
     SELECT * FROM users WHERE username = 'admin' OR '1'='1'
     
     """
-    return jsonify({"success": True, 'message': f"User {username} logged in successfully"})
-  return jsonify({"success": False, 'message': f"Username or password is incorrect"})
+    return jsonify({"success": True, 'message': "User {} logged in successfully".format(username)})
+  return jsonify({"success": False, 'message': "Username or password is incorrect"})
 
 # welcome page
 @app.route("/welcome")
